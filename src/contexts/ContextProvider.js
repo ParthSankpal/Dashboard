@@ -13,7 +13,22 @@ const initialState ={
 export const ContextProvider= ({children})=>{
     const [activeMenu, setActiveMenu] = useState(true);
     const [isClicked, setIsClicked] = useState(initialState);
-    const [screenSize, setScreenSize] = useState(undefined)
+    const [screenSize, setScreenSize] = useState(undefined);
+    const [currentColor, setCurrentColor] = useState('#03C9D7');
+    const [currentMode, setCurrentMOde] = useState("Light");
+    const [themeSettings, setThemeSettings] = useState(false)
+    
+    const setMode=(e)=>{
+        setCurrentMOde(e.target.value);
+        localStorage.setItem('themeMode',e.target.value)
+        setThemeSettings(false)
+    }
+    const setColor=(color)=>{
+        setCurrentColor(color);
+        localStorage.setItem('colorMode',color)
+        setThemeSettings(false)
+    }
+
     const handelClick=(clicked)=>{setIsClicked({...initialState, [clicked] :true});}
     return(
         <StateContext.Provider value={{
@@ -23,10 +38,14 @@ export const ContextProvider= ({children})=>{
             setIsClicked,
             handelClick,
             screenSize,
-            setScreenSize
+            setScreenSize,
+            currentColor,currentMode,
+            setColor, setMode,
+            themeSettings, setThemeSettings
             }}>
             {children}
         </StateContext.Provider>
+
     )
 }
 
